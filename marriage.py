@@ -9,35 +9,31 @@ ladies = {
     'Elaine': ['Lancelot', 'Galahad']}
 matches = []
 
-def getdata(fname):
-    file = open(fname, 'r')
-    # input = open ('inputfilename', 'r')
+def read_file(filename):
+    with open(filename, 'r') as f:
+        file = []
 
-    with open(fname, 'r') as f:
-        first_line = f.readline()
-    print(first_line)
+        # gets the first value of the file so that we know how many matches we need to make
+        # this is a string value at the moment
+        totalMatches = f.readline()
+        # print(totalMatches, end='')
 
-    lines = []
-    with open(fname) as file:
-        for line in file:
-            line = line.strip()
-            lines.append(line)
-    lines.pop(0)
-
-    i = 0
-    while i < (len(lines) / 2):
-        knights.append(lines[i])
-        i = i + 1
-
-    while (i + 1) <= (len(lines)):
-        ladies.append(lines[i])
-        i += 1
+        # reads each of the other lines of the file
+        for line in f:
+            file.append(line)
+            # print(line, end='')
+    # print(file)
 
 def perfect_matches():
-    x = 0
+    for key, value in knights.items():
+        matches.append(key)
+        matches.append(value)
 
-def main(argv):
-    file_name = sys.argv[0]
-    getdata(file_name)
 
-main("10.txt")
+    print(matches)
+
+def main():
+    read_file('ten.txt')
+    perfect_matches()
+
+main()
