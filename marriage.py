@@ -12,6 +12,7 @@ ladies1 = {
     'Guinevere': ['Galahad', 'Lancelot'],
     'Elaine': ['Lancelot', 'Galahad']}
 matches = []
+numPairs = 0
 
 def read_file(filename):
     with open(filename, 'r') as f:
@@ -19,13 +20,14 @@ def read_file(filename):
 
         # gets the first value of the file so that we know how many matches we need to make
         # this is a string value at the moment
-        totalMatches = f.readline()
+        numPairs = f.readline()
 
         # reads each of the other lines of the dictionary
         for line in f:
             items = line.split()
             key, values = items[0], items[1:]
             people[key] = values
+        print("Number of pairs: ", numPairs)
         print(people, end='')
 
 def printPairings():
