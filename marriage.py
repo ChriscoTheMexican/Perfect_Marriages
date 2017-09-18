@@ -1,10 +1,14 @@
 # Chris Swanson and Chris Casey - CSC 440 - September 20, 2017
 import sys
 
-knights = {
+knights = {}
+ladies = {}
+people = {}
+
+knights1 = {
     'Galahad': ['Guinevere', 'Elaine'],
     'Lancelot': ['Guinevere', 'Elaine']}
-ladies = {
+ladies1 = {
     'Guinevere': ['Galahad', 'Lancelot'],
     'Elaine': ['Lancelot', 'Galahad']}
 matches = []
@@ -16,21 +20,21 @@ def read_file(filename):
         # gets the first value of the file so that we know how many matches we need to make
         # this is a string value at the moment
         totalMatches = f.readline()
-        # print(totalMatches, end='')
 
-        # reads each of the other lines of the file
+        # reads each of the other lines of the dictionary
         for line in f:
-            file.append(line)
-            # print(line, end='')
-    # print(file)
+            items = line.split()
+            key, values = items[0], items[1:]
+            people[key] = values
+        print(people, end='')
+
+def printPairings():
+    print("Functionality to be added")
 
 def perfect_matches():
-    for key, value in knights.items():
+    for key, value in knights1.items():
         matches.append(key)
         matches.append(value)
-
-
-    print(matches)
 
 def main():
     read_file('ten.txt')
