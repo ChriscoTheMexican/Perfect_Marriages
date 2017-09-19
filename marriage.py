@@ -29,11 +29,11 @@ def read_file(filename):
 
 def perfect_matches():
     # gets the next knight to be matched
-    knightsToBeMatched = [item[0:] for item in knights]
+    knights_left = [item[0:] for item in knights]
 
-    while knightsToBeMatched:
+    while knights_left:
         # pops the first knight from the list
-        current_knight = knightsToBeMatched.pop(0)
+        current_knight = knights_left.pop(0)
 
         # Gets the current knights choice for a lady
         engagement_choices = knights[current_knight]
@@ -56,11 +56,12 @@ def perfect_matches():
                 engaged[current_lady] = current_knight
 
                 if knights[match]:
-                    knightsToBeMatched.append(match)
+                    # knight needs to look for another match
+                    knights_left.append(match)
             else:
                 if engagement_choices:
                     # Look again
-                    knightsToBeMatched.append(current_knight)
+                    knights_left.append(current_knight)
     return engaged
 
 def print_pairings():
