@@ -1,6 +1,8 @@
 # Chris Swanson and Chris Casey - CSC 440 - September 20, 2017
 import sys
-import timeit
+import time
+
+start_time = time.time()
 
 knights = {}
 ladies = {}
@@ -38,7 +40,7 @@ def perfect_matches():
         # Gets the current knights choice for a lady
         engagement_choices = knights[current_knight]
 
-        # gets the ladies next peferance for a knight
+        # gets the ladies next preference for a knight
         current_lady = engagement_choices.pop(0)
 
         # matches current
@@ -70,12 +72,23 @@ def print_pairings():
         print(value, key)
 
 def main():
-    read_file('ten.txt')
+    if len(sys.argv) == 2:
+        read_file(sys.argv[1])
+
+    elif len(sys.argv) == 1:
+        print("Please enter the name of a file.")
+        return 1
+
+    else:
+        print("Please enter a valid number of arguments!")
+        return 1
 
     # Finds the matches for each knight and lady
     perfect_matches()
 
     # prints the pairings of knights and ladies
     print_pairings()
+
+    print("-- %s seconds --" % (time.time() - start_time))
 
 main()
