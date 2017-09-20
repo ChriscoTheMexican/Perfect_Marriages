@@ -9,25 +9,29 @@ ladies = {}
 engaged = {}
 numPairs = 0
 
+
 def read_file(filename):
     i = 0
     with open(filename, 'r') as f:
+
         # gets the first value of the file so that we know how many matches we need to make
-        # this is a string value at the moment
         numPairs = f.readline()
         j = int(numPairs)
 
         # reads each of the other lines of the dictionary
         for line in f:
+            # reads the first half of the file into the knights dictionary
             if (i < j):
                 items = line.split()
                 key, values = items[0], items[1:]
                 knights[key] = values
                 i = i + 1
+            # reads the second half of the file into the ladies dictionary
             else:
                 items = line.split()
                 key, values = items[0], items[1:]
                 ladies[key] = values
+
 
 def perfect_matches():
     # gets the next knight to be matched
@@ -44,51 +48,51 @@ def perfect_matches():
         current_lady = engagement_choices.pop(0)
 
         # matches current
-        match = engaged.get(current_lady)
+        matched = engaged.get(current_lady)
 
         # Checks to see if the lady is engaged
-        if not match:
+        if not matched:
             engaged[current_lady] = current_knight
+
+        # If she is matched, check to see if the there is a better match
         else:
-            # gets the current lady that needs to be matches
+            # gets the current lady
             ladiesToBeMatched = ladies[current_lady]
 
-            if ladiesToBeMatched.index(match) > ladiesToBeMatched.index(current_knight):
-                # The lady has found a better match
+            # checks to see lady has found a better match
+            if ladiesToBeMatched.index(matched) > ladiesToBeMatched.index(current_knight):
                 engaged[current_lady] = current_knight
 
-                if knights[match]:
-                    # knight needs to look for another match
-                    knights_left.append(match)
+                # knight needs to look for another match, because a better match has been found
+                if knights[matched]:
+                    knights_left.append(matched)
+
+            # No better match has been found so they lady keeps looking for a better match
             else:
                 if engagement_choices:
-                    # Look again
                     knights_left.append(current_knight)
     return engaged
+
 
 def print_pairings():
     # Prints out each match on its own line with the knight first and then
     for key, value in engaged.items():
-        print(value, key)
+        current_marriage = value + " " + key + "\n"
+        sys.stdout.write(current_marriage)
+
 
 def main():
+    # Input validation to handle user input, only one file name can be entered
     if len(sys.argv) == 2:
         read_file(sys.argv[1])
-
-    elif len(sys.argv) == 1:
-        print("Please enter the name of a file.")
-        return 1
-
     else:
-        print("Please enter a valid number of arguments!")
-        return 1
+        sys.exit(1)
 
-    # Finds the matches for each knight and lady
     perfect_matches()
 
-    # prints the pairings of knights and ladies
     print_pairings()
 
-    print("-- %s seconds --" % (time.time() - start_time))
+    # print("-- %s seconds --" % (time.time() - start_time))
+
 
 main()
